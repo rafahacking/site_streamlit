@@ -16,29 +16,30 @@ else:
 
     maispesado = dataframe['Peso_Kg'].max()
 
-    quantidade_produtos = len(dataframe)
-
-    st.dataframe(dataframe)
-
     colfilter1, colfilter2 = st.columns(2)
 
     with colfilter1:
-        minimo = st.number_input(label="Mínimo", label_visibility='visible',min_value=0,max_value=int(maispesado))
+            minimo = st.number_input(label="Mínimo", label_visibility='visible',min_value=0,max_value=int(maispesado))
 
     with colfilter2:
-        maximo = st.number_input(label="Máximo", label_visibility="visible",min_value=0,max_value=int(maispesado))
+            maximo = st.number_input(label="Máximo", label_visibility="visible",min_value=0,max_value=int(maispesado))
 
     filtrado = dataframe[(dataframe["Peso_Kg"] > minimo) & (dataframe["Peso_Kg"] < maximo) ]
 
-    total_kg = dataframe["Peso_Kg"].sum()
+    st.dataframe(filtrado)
 
-    media_kg = dataframe["Peso_Kg"].mean()
+    quantidade_produtos = len(filtrado)
 
-    produto_categoria = dataframe.groupby("Categoria")["ID_Produto"].count().reset_index()
+    total_kg = filtrado["Peso_Kg"].sum()
+
+    media_kg = filtrado["Peso_Kg"].mean()
+
+    produto_categoria = filtrado.groupby("Categoria")["ID_Produto"].count().reset_index()
 
     st.title("Produtos em Estoque")
 
     col1, col2, col3 = st.columns(3)
+    
     col1.metric("Total de Produtos: ", quantidade_produtos)
 
     col2.metric("Total em KIlos: ", total_kg)
