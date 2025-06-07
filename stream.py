@@ -36,7 +36,7 @@ arquivo = st.file_uploader("Envie um arquivo Excel", type=["xlsx"])
 
 st.image("gato-desconfiado.PNG")
 
-produtos = pd.Dataframe(
+produtos = pd.DataFrame(
     {
         "Produto":["Computador", "Bicicleta", "Cadeira"],
         "Valor":[5000, 800, 900]
@@ -45,4 +45,10 @@ produtos = pd.Dataframe(
 
 )
 
-st.dataframe(produtos)
+col1, col2 = st.columns(2)
+
+with col1:
+    st.dataframe(produtos)
+    
+with col2:
+    st.bar_chart(data=produtos, x="Produtos",y="Valor")
